@@ -4,27 +4,13 @@
     color: '#3FADB5',
     defaults: {
       name: { value: "" },
-      selectProperty: { value: "payload._id", validate: RED.validators.typedInput('propertyType') },
-      propertyType: { value: "msg" }
+      selectedProperty: { value: "_id" }
     },
     inputs:1,
     outputs:1,
     icon: "inject.png",
     label: function() {
-      return this.name || `objectid: ${this.propertyType}.${this.property}`;
-    },
-    oneditprepare: function() {
-      var node = this;
-
-      $("#node-input-property").typedInput({
-        default: this.propertyType || 'msg',
-        types: [ 'msg' ]
-      });
-    },
-    oneditsave: function() {
-      this.propertyType = $("#node-input-selectProperty").typedInput('type');
-      // note; Not sure how to force a default, put aside for now.
-      // this.selectProperty = this.selectProperty || 'payload';
+      return this.name || `${this.selectedProperty}`;
     }
   });
 </script>
@@ -36,18 +22,20 @@
   </div>
 
   <div class="form-row">
-    <label for="node-input-selectProperty"><i class="fa fa-list"></i> Property</label>
-    <input type="text" id="node-input-selectProperty" />
+    <label for="node-input-selectedProperty"><i class="fa fa-list"></i> Property</label>
+    <input type="text" id="node-input-selectedProperty" />
   </div>
 </script>
 
 <script type="text/x-red" data-help-name="objectid">
-  <p>This small node-red node is used to create an ObjectID for mongodb.</p></br>
+  <p>This Node-Red node is to create an Object-Id for mongodb write operations from JSON inputs.</p></br>
 
-  <p>The selected property in `msg` will be converted to an ObjectID,
-    you can input a 24 char hexstring and create an ObjectID from it.</p>
+  <p>The selected property in `msg.payload` will be converted to an Object-Id,
+    you can input a 24 char hexstring via `_id` property and it creates an Object-Id.</p>
 
-  <p>For example: <code>msg._id = "572dbc06f307c8682045c55c"</code></p>
+  <p>If there is none of the property the node will add that property with an Object-Id.</p>
 
-  <p>If the target property is null, a random id is created.</p>
+  <p>For example: <code>msg.payload._id = "572dbc06f307c8682045c55c"</code></p>
+
+  <p>If the target property value is null/false/0, a random Object-Id is created.</p>
 </script>

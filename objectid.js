@@ -1,34 +1,73 @@
-var ObjectID = require('bson').ObjectID;
+'use strict'
 
-module.exports = function(RED) {
-  function ObjectIdNode(config) {
-    RED.nodes.createNode(this, config);
+module.exports = function (RED) {
+  function ObjectIdNode (config) {
+    var ObjectID = require('bson').ObjectID
 
-    this.name = config.name;
-    this.property = config.property || 'payload';
+    RED.nodes.createNode(this, config)
 
-    this.on('input', msg=> {
-      var value;
+    this.name = config.name
+    this.selectedProperty = config.selectedProperty || '_id'
 
-      try {
-        value = RED.util.getMessageProperty(msg, this.property);
+    let node = this
+
+    node.on('input', msg => {
+      var propertyValue
+      var newValue
+
+      if (Array.isArray(msg.payload)) {
+        newValue = msg.payload.forEach(function (entry) {
+          try {
+            propertyValue = entry[node.selectedProperty] || null
+          } catch (e) {
+            node.error(e, msg)
+          }
+
+          if (propertyValue) {
+            newValue = new ObjectID(propertyValue)
+          } else {
+            newValue = new ObjectID()
+          }
+
+          if (propertyValue && entry[node.selectedProperty] !== Object(entry[node.selectedProperty])) {
+            entry[node.selectedProperty] = {
+              _id: newValue,
+              value: propertyValue
+            }
+          } else {
+            entry[node.selectedProperty] = newValue
+          }
+        })
+      } else {
+        try {
+          propertyValue = msg.payload[node.selectedProperty] || null
+        } catch (e) {
+          node.error(e, msg)
+        }
+
+        if (propertyValue) {
+          newValue = new ObjectID(propertyValue)
+        } else {
+          newValue = new ObjectID()
+        }
       }
-      catch (e) {
-        node.error(e, msg);
+
+      if (propertyValue) {
+        msg.payload[node.selectedProperty] = newValue
+      } else {
+        if (msg.payload !== Object(msg.payload)) {
+          msg.payload = {
+            _id: newValue,
+            value: msg.payload
+          }
+        } else {
+          msg.payload._id = newValue
+        }
       }
 
-      if (Array.isArray(value)) {
-        value = value.map(value=> new ObjectID(value));
-      }
-      else {
-        value = new ObjectID(value);
-      }
-
-      RED.util.setMessageProperty(msg, this.property, value, true);
-
-      this.send(msg);
-    });
+      this.send(msg)
+    })
   }
 
-  RED.nodes.registerType('objectid', ObjectIdNode);
+  RED.nodes.registerType('objectid', ObjectIdNode)
 }

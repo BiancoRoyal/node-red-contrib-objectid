@@ -1,16 +1,16 @@
 # node-red-contrib-objectid
-Node-Red Node to create an ObjectID for queries in mongodb
 
-![flowshot](screenshots/screenshot1.png)
+This Node-Red node is to create an Object-Id for mongodb write operations from JSON inputs.
 
-This small node-red node is used to create an ObjectID for mongodb.
+![flowshot](screenshots/screenshot2.png)
 
-The selected property in `msg` will be enhanced or replaced
-with an Object-Id, you can input a 24 char hex and create an Object-Id from it.
+The selected property in `msg.payload` will be set to an Object-Id, 
+you can also inject a 24 hex characters and the node creates 
+a valid Object-Id property from it or raise an error if it is not valid.
 
 For example: `msg.payload._id = "572dbc06f307c8682045c55c"`
 
-If the target property is null, a random id is created.
+If the target property is null/false/0, a random Object-Id is created.
 
 ## Config
 
