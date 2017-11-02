@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-objectid",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Node Red Node to create an ObjectID for mongodb.",
   "keywords": [
     "node-red",
@@ -8,7 +8,7 @@
     "mongodb",
     "_id"
   ],
-  "author": "Chris",
+  "author": "Chris and Klaus",
   "license": "MIT",
   "dependencies": {
     "bson": "^1.0.4"
@@ -24,5 +24,25 @@
     "nodes": {
       "objectid": "objectid.js"
     }
+  },
+  "scripts": {
+    "test": "standard --fix",
+    "build": "standard --fix",
+    "prepublishOnly": "standard --fix && npm run build && npm test",
+    "ci-publish": "ci-publish",
+    "release": "standard-version"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3",
+    "standard-version": "^4.2.0"
+  },
+  "standard": {
+    "ignore": [
+      "node_modules/",
+      "examples/",
+      "docs",
+      "test",
+      "extras"
+    ]
   }
 }
