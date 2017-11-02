@@ -14,7 +14,15 @@ If the target property is null/false/0, a random Object-Id is created.
 
 ## Config
 
-![flowsprops](screenshots/property.png)
+![flowsprops](screenshots/property2.png)
+
+## Examples
+
+![flowsres](screenshots/result.png)
+
+![flowsres2](screenshots/result2.png)
+
+![flowsres3](screenshots/result3.png)
 
 ## License:
 __MIT:__
