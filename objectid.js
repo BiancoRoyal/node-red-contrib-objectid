@@ -12,6 +12,10 @@ module.exports = function (RED) {
     let node = this
 
     node.on('input', msg => {
+      if (msg.payload === undefined) {
+        return
+      }
+
       var propertyValue
       var newValue
 
@@ -52,18 +56,16 @@ module.exports = function (RED) {
         }
       }
 
-      if (propertyValue) {
-        msg.payload[node.selectedProperty] = newValue
-      } else {
+      if (propertyValue === null) {
         if (msg.payload !== Object(msg.payload)) {
+          let payload = msg.payload
           msg.payload = {
-            _id: newValue,
-            value: msg.payload
+            value: payload
           }
-        } else {
-          msg.payload._id = newValue
         }
       }
+
+      msg.payload[node.selectedProperty] = newValue
 
       this.send(msg)
     })
