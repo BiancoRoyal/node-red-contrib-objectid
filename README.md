@@ -1,15 +1,20 @@
 # node-red-contrib-objectid
 Node-Red Node to create an ObjectID for queries in mongodb
 
-<img src="https://github.com/Chris1234567899/node-red-contrib-objectid/blob/master/screenshots/screenshot1.PNG" />
+![flowshot](screenshots/screenshot1.png)
 
 This small node-red node is used to create an ObjectID for mongodb.
 
-The selected property in `msg` will be converted to an ObjectID, you can input a 24 char hexstring and create an ObjectID from it.
+The selected property in `msg` will be enhanced or replaced
+with an Object-Id, you can input a 24 char hex and create an Object-Id from it.
 
-For example: `msg._id = "572dbc06f307c8682045c55c"`
+For example: `msg.payload._id = "572dbc06f307c8682045c55c"`
 
 If the target property is null, a random id is created.
+
+## Config
+
+![flowsprops](screenshots/property.png)
 
 ## License:
 __MIT:__

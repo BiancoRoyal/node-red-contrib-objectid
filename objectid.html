@@ -4,7 +4,7 @@
     color: '#3FADB5',
     defaults: {
       name: { value: "" },
-      property: { value: "payload", validate: RED.validators.typedInput('propertyType') },
+      selectProperty: { value: "payload._id", validate: RED.validators.typedInput('propertyType') },
       propertyType: { value: "msg" }
     },
     inputs:1,
@@ -22,9 +22,9 @@
       });
     },
     oneditsave: function() {
-      this.propertyType = $("#node-input-property").typedInput('type');
+      this.propertyType = $("#node-input-selectProperty").typedInput('type');
       // note; Not sure how to force a default, put aside for now.
-      // this.property = this.property || 'payload';
+      // this.selectProperty = this.selectProperty || 'payload';
     }
   });
 </script>
@@ -36,8 +36,8 @@
   </div>
 
   <div class="form-row">
-    <label for="node-input-property"><i class="fa fa-list"></i> Property</label>
-    <input type="text" id="node-input-property" />
+    <label for="node-input-selectProperty"><i class="fa fa-list"></i> Property</label>
+    <input type="text" id="node-input-selectProperty" />
   </div>
 </script>
 
