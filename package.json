@@ -35,8 +35,8 @@
     "release": "standard-version"
   },
   "devDependencies": {
-    "standard": "^10.0.3",
-    "standard-version": "^4.2.0"
+    "standard": "^11.0.1",
+    "standard-version": "^4.4.0"
   },
   "standard": {
     "ignore": [
